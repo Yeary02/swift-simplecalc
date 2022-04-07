@@ -123,18 +123,38 @@ calculate("1 -2 3 -4 5 count") == 5
 // Implement calculate([String]) and calculate(String)
 // to use floating-point values
 
-//func calculate(_ args: [String]) -> Double {
-//    return -1.0
-//}
-//func calculate(_ arg: String) -> Double {
-//    return -1.0
-//}
-//
-//calculate(["2.0", "+", "2.0"]) == 4.0
-//calculate([".5", "+", "1.5"]) == 2.0
-//calculate(["12.0", "-", "12.0"]) == 0.0
-//calculate(["2.5", "*", "2.5"]) == 6.25
-//calculate(["2.0", "/", "2.0"]) == 1.0
-//calculate(["2.0", "%", "2.0"]) == 0.0
-//calculate("1.0 2.0 3.0 4.0 5.0 count") == 5.0
+func calculate(_ args: [String]) -> Double {
+    if args.last == "count" { // calc count
+        return Double(args.count) - 1
+    } else {
+        let operand = args[1]
+
+        switch operand {
+        case "+":
+            return Double(args[0])! + Double(args[2])!
+        case "-":
+            return Double(args[0])! - Double(args[2])!
+        case "*":
+            return Double(args[0])! * Double(args[2])!
+        case "/":
+            return Double(args[0])! / Double(args[2])!
+        case "%":
+            return Double(args[0])!.truncatingRemainder(dividingBy: Double(args[2])!)
+        default:
+            return -1
+        }
+    }
+}
+func calculate(_ arg: String) -> Double {
+    let makeArrayOfStrings = arg.components(separatedBy: " ")
+    return calculate(makeArrayOfStrings)
+}
+
+calculate(["2.0", "+", "2.0"]) == 4.0
+calculate([".5", "+", "1.5"]) == 2.0
+calculate(["12.0", "-", "12.0"]) == 0.0
+calculate(["2.5", "*", "2.5"]) == 6.25
+calculate(["2.0", "/", "2.0"]) == 1.0
+calculate(["2.0", "%", "2.0"]) == 0.0
+calculate("1.0 2.0 3.0 4.0 5.0 count") == 5
 
